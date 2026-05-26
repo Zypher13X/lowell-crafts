@@ -1,8 +1,10 @@
 import Gallery from "@/components/Gallery";
 import Marquee from "@/components/Marquee";
-import { crafts } from "@/data/crafts";
+import { getCrafts } from "@/lib/queries";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const crafts = await getCrafts();
+
   return (
     <div>
       <div className="mb-4 text-center">

@@ -1,5 +1,6 @@
 import Image from "next/image";
-import type { Craft } from "@/data/crafts";
+import type { SanityCraft } from "@/lib/queries";
+import { urlFor } from "@/lib/sanity";
 
 const CATEGORY_COLORS: Record<string, string> = {
   ceramics: "bg-amber-100 text-amber-800",
@@ -9,16 +10,16 @@ const CATEGORY_COLORS: Record<string, string> = {
   paper: "bg-sky-100 text-sky-800",
 };
 
-// Vary image aspect ratio to create masonry rhythm
 const ASPECT_RATIOS = ["aspect-square", "aspect-[4/5]", "aspect-[3/4]"];
 
 interface Props {
-  craft: Craft;
+  craft: SanityCraft;
   index: number;
 }
 
 export default function CraftCard({ craft, index }: Props) {
   const aspectRatio = ASPECT_RATIOS[index % ASPECT_RATIOS.length];
+  const imageSrc = craft.image ? urlFor(craft.image).width(800).url() : null;
 
   return (
     <article
@@ -26,16 +27,18 @@ export default function CraftCard({ craft, index }: Props) {
       style={{ animationDelay: `${index * 80}ms` }}
     >
       <div className={`relative ${aspectRatio} bg-stone-100`}>
-        {craft.imageSrc ? (
+        {imageSrc ? (
           <Image
-            src={craft.imageSrc}
-            alt={craft.imageAlt}
+            src={imageSrc}
+            alt={craft.imageAlt ?? craft.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <span className="text-5xl text-stone-200 transition-transform duration-300 group-hover:scale-110">◇</span>
+            <span className="text-5xl text-stone-200 transition-transform duration-300 group-hover:scale-110">
+              ◇
+            </span>
           </div>
         )}
         {!craft.inStock && (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Craft, Category } from "@/data/crafts";
+import type { SanityCraft, Category } from "@/lib/queries";
 import CraftCard from "./CraftCard";
 
 const FILTERS: { label: string; value: Category | "all" }[] = [
@@ -13,14 +13,13 @@ const FILTERS: { label: string; value: Category | "all" }[] = [
   { label: "Paper", value: "paper" },
 ];
 
-export default function Gallery({ crafts }: { crafts: Craft[] }) {
+export default function Gallery({ crafts }: { crafts: SanityCraft[] }) {
   const [active, setActive] = useState<Category | "all">("all");
 
   const filtered = active === "all" ? crafts : crafts.filter((c) => c.category === active);
 
   return (
     <div>
-      {/* Category filter pills */}
       <div className="mb-8 flex flex-wrap gap-2">
         {FILTERS.map((f) => (
           <button
@@ -37,13 +36,9 @@ export default function Gallery({ crafts }: { crafts: Craft[] }) {
         ))}
       </div>
 
-      {/* Masonry columns grid — key forces re-animation on filter change */}
-      <div
-        key={active}
-        className="columns-1 gap-6 sm:columns-2 lg:columns-3"
-      >
+      <div key={active} className="columns-1 gap-6 sm:columns-2 lg:columns-3">
         {filtered.map((craft, i) => (
-          <div key={craft.id} className="mb-6 break-inside-avoid">
+          <div key={craft._id} className="mb-6 break-inside-avoid">
             <CraftCard craft={craft} index={i} />
           </div>
         ))}

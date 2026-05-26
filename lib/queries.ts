@@ -1,13 +1,16 @@
 import { client } from "./sanity";
 
+export type Category = "ceramics" | "textiles" | "woodwork" | "jewelry" | "paper";
+
 export interface SanityCraft {
   _id: string;
   title: string;
   description: string;
-  category: "ceramics" | "textiles" | "woodwork" | "jewelry" | "paper";
+  category: Category;
   price: number;
   inStock: boolean;
-  image?: { asset: { _ref: string } };
+  // Sanity image reference — pass to urlFor() to get a URL
+  image?: { asset: { _ref: string }; hotspot?: unknown };
   imageAlt?: string;
 }
 
