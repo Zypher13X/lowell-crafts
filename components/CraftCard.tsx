@@ -9,20 +9,33 @@ const CATEGORY_COLORS: Record<string, string> = {
   paper: "bg-sky-100 text-sky-800",
 };
 
-export default function CraftCard({ craft }: { craft: Craft }) {
+// Vary image aspect ratio to create masonry rhythm
+const ASPECT_RATIOS = ["aspect-square", "aspect-[4/5]", "aspect-[3/4]"];
+
+interface Props {
+  craft: Craft;
+  index: number;
+}
+
+export default function CraftCard({ craft, index }: Props) {
+  const aspectRatio = ASPECT_RATIOS[index % ASPECT_RATIOS.length];
+
   return (
-    <article className="group flex flex-col overflow-hidden rounded-lg border border-stone-200 bg-white transition-shadow hover:shadow-md">
-      <div className="relative aspect-square bg-stone-100">
+    <article
+      className="card-enter group flex flex-col overflow-hidden rounded-lg border border-stone-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:rotate-[0.4deg] hover:shadow-lg"
+      style={{ animationDelay: `${index * 80}ms` }}
+    >
+      <div className={`relative ${aspectRatio} bg-stone-100`}>
         {craft.imageSrc ? (
           <Image
             src={craft.imageSrc}
             alt={craft.imageAlt}
             fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <span className="text-4xl text-stone-300">◇</span>
+            <span className="text-5xl text-stone-200 transition-transform duration-300 group-hover:scale-110">◇</span>
           </div>
         )}
         {!craft.inStock && (
