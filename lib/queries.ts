@@ -1,6 +1,6 @@
 import { client } from "./sanity";
 
-export type Category = "ceramics" | "textiles" | "woodwork" | "jewelry" | "paper";
+export type Category = "wearables" | "home" | "amigurumi" | "accessories";
 
 export interface SanityCraft {
   _id: string;

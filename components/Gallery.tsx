@@ -6,11 +6,10 @@ import CraftCard from "./CraftCard";
 
 const FILTERS: { label: string; value: Category | "all" }[] = [
   { label: "All", value: "all" },
-  { label: "Ceramics", value: "ceramics" },
-  { label: "Textiles", value: "textiles" },
-  { label: "Woodwork", value: "woodwork" },
-  { label: "Jewelry", value: "jewelry" },
-  { label: "Paper", value: "paper" },
+  { label: "Wearables", value: "wearables" },
+  { label: "Home", value: "home" },
+  { label: "Amigurumi", value: "amigurumi" },
+  { label: "Accessories", value: "accessories" },
 ];
 
 export default function Gallery({ crafts }: { crafts: SanityCraft[] }) {

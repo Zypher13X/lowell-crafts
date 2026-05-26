@@ -10,17 +10,17 @@ export default function AboutPage() {
       <h1 className="font-serif text-4xl text-stone-800">About</h1>
       <div className="mt-8 space-y-6 text-stone-600 leading-relaxed">
         <p>
-          Lowell Crafts is a one-person studio making objects meant to be used and loved. Everything
-          here is shaped, sewn, carved, or folded by hand — no two pieces are exactly alike.
+          Lowell Crafts is a small crochet studio making pieces meant to be worn, used, and loved.
+          Every item is hooked by hand — no machines, no shortcuts, no two exactly alike.
         </p>
         <p>
-          I work out of a small studio in the Pacific Northwest, drawing on traditional craft
-          techniques and natural materials. My goal is to make things that earn a permanent spot in
-          your home.
+          I started crocheting years ago as a way to slow down, and it stuck. Now I make everything
+          from chunky beanies and cozy throws to tiny amigurumi and market totes. Natural fibers
+          wherever possible, always soft against the skin.
         </p>
         <p>
-          Each item ships carefully wrapped, with a hand-written note. If you have questions about a
-          piece or want to discuss a custom order, please reach out on the contact page.
+          Custom colorways and sizing are always welcome — just reach out on the contact page and
+          we'll figure it out together.
         </p>
       </div>
     </div>

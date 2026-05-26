@@ -24,11 +24,10 @@ export default defineType({
       type: "string",
       options: {
         list: [
-          { title: "Ceramics", value: "ceramics" },
-          { title: "Textiles", value: "textiles" },
-          { title: "Woodwork", value: "woodwork" },
-          { title: "Jewelry", value: "jewelry" },
-          { title: "Paper", value: "paper" },
+          { title: "Wearables", value: "wearables" },
+          { title: "Home", value: "home" },
+          { title: "Amigurumi", value: "amigurumi" },
+          { title: "Accessories", value: "accessories" },
         ],
         layout: "radio",
       },

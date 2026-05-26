@@ -1,4 +1,4 @@
-const TEXT = "handmade · small batch · made with care · one of a kind · ";
+const TEXT = "handmade crochet · hook & yarn · slow stitch · made with love · one of a kind · ";
 const REPEATED = TEXT.repeat(8);
 
 export default function Marquee() {

@@ -3,11 +3,10 @@ import type { SanityCraft } from "@/lib/queries";
 import { urlFor } from "@/lib/sanity";
 
 const CATEGORY_COLORS: Record<string, string> = {
-  ceramics: "bg-amber-100 text-amber-800",
-  textiles: "bg-emerald-100 text-emerald-800",
-  woodwork: "bg-orange-100 text-orange-800",
-  jewelry: "bg-rose-100 text-rose-800",
-  paper: "bg-sky-100 text-sky-800",
+  wearables: "bg-rose-100 text-rose-800",
+  home: "bg-amber-100 text-amber-800",
+  amigurumi: "bg-sky-100 text-sky-800",
+  accessories: "bg-emerald-100 text-emerald-800",
 };
 
 const ASPECT_RATIOS = ["aspect-square", "aspect-[4/5]", "aspect-[3/4]"];

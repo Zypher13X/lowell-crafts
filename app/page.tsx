@@ -12,12 +12,12 @@ export default async function HomePage() {
           className="font-serif font-normal leading-tight text-stone-800"
           style={{ fontSize: "clamp(2.75rem, 7vw, 6.5rem)" }}
         >
-          Handmade
+          Crocheted
           <br />
-          with Care
+          with Love
         </h1>
         <p className="mx-auto mt-5 max-w-md text-stone-500 sm:text-lg">
-          Each piece is made by hand in small batches — ceramics, textiles, wood, and more.
+          Each piece is hooked by hand in small batches — wearables, home goods, amigurumi, and more.
         </p>
       </div>
 
