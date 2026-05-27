@@ -1,4 +1,5 @@
 import { client } from "./sanity";
+import type { SanityImageRef } from "./sanity";
 
 export type Category = "wearables" | "home" | "amigurumi" | "accessories";
 
@@ -9,22 +10,26 @@ export interface SanityCraft {
   category: Category;
   price: number;
   inStock: boolean;
-  // Sanity image reference — pass to urlFor() to get a URL
-  image?: { asset: { _ref: string }; hotspot?: unknown };
+  image?: SanityImageRef;
   imageAlt?: string;
 }
 
 export async function getCrafts(): Promise<SanityCraft[]> {
-  return client.fetch(
-    `*[_type == "craft"] | order(_createdAt asc) {
-      _id,
-      title,
-      description,
-      category,
-      price,
-      inStock,
-      image,
-      imageAlt
-    }`
-  );
+  try {
+    return await client.fetch(
+      `*[_type == "craft"] | order(_createdAt asc) {
+        _id,
+        title,
+        description,
+        category,
+        price,
+        inStock,
+        image,
+        imageAlt
+      }`
+    );
+  } catch (err) {
+    console.error("Failed to fetch crafts from Sanity:", err);
+    return [];
+  }
 }

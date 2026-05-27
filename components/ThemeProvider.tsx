@@ -1,8 +1,18 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export type Theme = "light" | "dark" | "craft";
+
+const VALID: Theme[] = ["light", "dark", "craft"];
+
+function readTheme(): Theme {
+  // Reads the data-theme attribute already set by the anti-flash script,
+  // so the initial state always matches the DOM — no toggle flicker.
+  if (typeof window === "undefined") return "light";
+  const attr = document.documentElement.getAttribute("data-theme") as Theme;
+  return VALID.includes(attr) ? attr : "light";
+}
 
 const ThemeContext = createContext<{
   theme: Theme;
@@ -14,17 +24,16 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("light");
-
-  useEffect(() => {
-    const stored = (localStorage.getItem("theme") as Theme) || "light";
-    setThemeState(stored);
-  }, []);
+  const [theme, setThemeState] = useState<Theme>(readTheme);
 
   function setTheme(t: Theme) {
     setThemeState(t);
-    localStorage.setItem("theme", t);
-    document.documentElement.setAttribute("data-theme", t);
+    try {
+      localStorage.setItem("theme", t);
+      document.documentElement.setAttribute("data-theme", t);
+    } catch {
+      // localStorage unavailable (private browsing) — visual change still applied
+    }
   }
 
   return (

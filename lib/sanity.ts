@@ -1,16 +1,19 @@
 import { createClient } from "next-sanity";
 import { createImageUrlBuilder } from "@sanity/image-url";
 
-export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
-  apiVersion: "2024-01-01",
-  useCdn: true,
-});
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
+
+if (!projectId) {
+  throw new Error("NEXT_PUBLIC_SANITY_PROJECT_ID is not set");
+}
+
+export const client = createClient({ projectId, dataset, apiVersion: "2024-01-01", useCdn: true });
 
 const builder = createImageUrlBuilder(client as Parameters<typeof createImageUrlBuilder>[0]);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function urlFor(source: any) {
+export type SanityImageRef = { asset: { _ref: string }; hotspot?: unknown };
+
+export function urlFor(source: SanityImageRef) {
   return builder.image(source);
 }
