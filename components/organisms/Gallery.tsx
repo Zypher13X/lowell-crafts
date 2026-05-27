@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import type { SanityCraft, Category } from "@/lib/queries";
-import CraftCard from "./CraftCard";
+import CraftCard from "@/components/organisms/CraftCard";
 
 const FILTERS: { label: string; value: Category | "all" }[] = [
   { label: "All", value: "all" },
@@ -14,8 +14,6 @@ const FILTERS: { label: string; value: Category | "all" }[] = [
 
 export default function Gallery({ crafts }: { crafts: SanityCraft[] }) {
   const [active, setActive] = useState<Category | "all">("all");
-  // Incremented on each filter change to retrigger card animations without
-  // unmounting the grid container (avoids full DOM remount from key={active}).
   const animKey = useRef(0);
 
   function handleFilter(value: Category | "all") {

@@ -1,13 +1,7 @@
 import Image from "next/image";
 import type { SanityCraft } from "@/lib/queries";
 import { urlFor } from "@/lib/sanity";
-
-const CATEGORY_COLORS: Record<string, string> = {
-  wearables:   "bg-rose-100 text-rose-800",
-  home:        "bg-amber-100 text-amber-800",
-  amigurumi:   "bg-sky-100 text-sky-800",
-  accessories: "bg-emerald-100 text-emerald-800",
-};
+import Badge from "@/components/atoms/Badge";
 
 const ASPECT_RATIOS = ["aspect-square", "aspect-[4/5]", "aspect-[3/4]"];
 
@@ -49,11 +43,7 @@ export default function CraftCard({ craft, index }: Props) {
         )}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <span
-          className={`w-fit rounded-full px-2 py-0.5 text-xs font-medium capitalize ${CATEGORY_COLORS[craft.category] ?? "bg-[var(--color-border)] text-muted"}`}
-        >
-          {craft.category}
-        </span>
+        <Badge category={craft.category} />
         <h3 className="font-serif text-lg text-body">{craft.title}</h3>
         <p className="flex-1 text-sm leading-relaxed text-muted">{craft.description}</p>
         <p className="mt-2 font-medium text-body">${craft.price}</p>

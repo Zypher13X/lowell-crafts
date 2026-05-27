@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import Nav from "@/components/organisms/Nav";
+import Footer from "@/components/organisms/Footer";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const lora = Lora({
   subsets: ["latin"],

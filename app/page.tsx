@@ -1,5 +1,5 @@
-import Gallery from "@/components/Gallery";
-import Marquee from "@/components/Marquee";
+import Gallery from "@/components/organisms/Gallery";
+import Marquee from "@/components/organisms/Marquee";
 import { getCrafts } from "@/lib/queries";
 
 export default async function HomePage() {

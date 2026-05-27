@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import FormField from "@/components/molecules/FormField";
+import Input from "@/components/atoms/Input";
+import Textarea from "@/components/atoms/Textarea";
 
 export const metadata: Metadata = {
   title: "Contact — Lowell Crafts",
@@ -16,44 +19,17 @@ export default function ContactPage() {
       </p>
 
       <form action={`mailto:${EMAIL}`} method="get" className="mt-10 space-y-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-body">
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            className="mt-1 w-full rounded-md border border-default bg-surface px-4 py-2.5 text-body placeholder-[var(--color-subtle)] focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
-            placeholder="Your name"
-          />
-        </div>
+        <FormField id="name" label="Name">
+          <Input id="name" name="name" type="text" placeholder="Your name" />
+        </FormField>
 
-        <div>
-          <label htmlFor="subject" className="block text-sm font-medium text-body">
-            Subject
-          </label>
-          <input
-            type="text"
-            id="subject"
-            name="subject"
-            className="mt-1 w-full rounded-md border border-default bg-surface px-4 py-2.5 text-body placeholder-[var(--color-subtle)] focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
-            placeholder="What's this about?"
-          />
-        </div>
+        <FormField id="subject" label="Subject">
+          <Input id="subject" name="subject" type="text" placeholder="What's this about?" />
+        </FormField>
 
-        <div>
-          <label htmlFor="body" className="block text-sm font-medium text-body">
-            Message
-          </label>
-          <textarea
-            id="body"
-            name="body"
-            rows={6}
-            className="mt-1 w-full rounded-md border border-default bg-surface px-4 py-2.5 text-body placeholder-[var(--color-subtle)] focus:border-[var(--color-accent)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent)]"
-            placeholder="Your message…"
-          />
-        </div>
+        <FormField id="body" label="Message">
+          <Textarea id="body" name="body" rows={6} placeholder="Your message…" />
+        </FormField>
 
         <button
           type="submit"
