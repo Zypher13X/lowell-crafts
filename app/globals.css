@@ -1,11 +1,63 @@
 @import "tailwindcss";
 
+/* ── Serif font ─────────────────────────────────────────────── */
 @theme inline {
   --font-serif: var(--font-lora), Georgia, serif;
 }
+.font-serif { font-family: var(--font-serif); }
 
-.font-serif {
-  font-family: var(--font-serif);
+/* ── Theme tokens ────────────────────────────────────────────── */
+:root {
+  --color-page:       #fafaf9;
+  --color-surface:    #ffffff;
+  --color-border:     #e7e5e4;
+  --color-text:       #1c1917;
+  --color-muted:      #78716c;
+  --color-subtle:     #a8a29e;
+  --color-accent:     #1c1917;
+  --color-on-accent:  #fafaf9;
+}
+
+[data-theme="dark"] {
+  --color-page:       #0c0a09;
+  --color-surface:    #1c1917;
+  --color-border:     #44403c;
+  --color-text:       #fafaf9;
+  --color-muted:      #a8a29e;
+  --color-subtle:     #57534e;
+  --color-accent:     #e7e5e4;
+  --color-on-accent:  #1c1917;
+}
+
+[data-theme="craft"] {
+  --color-page:       #fdf6ec;
+  --color-surface:    #fffbf5;
+  --color-border:     #c4906a;
+  --color-text:       #3d1f0d;
+  --color-muted:      #8b5e3c;
+  --color-subtle:     #b8956a;
+  --color-accent:     #9c5c38;
+  --color-on-accent:  #fffbf5;
+}
+
+/* ── Semantic utilities ──────────────────────────────────────── */
+@utility bg-page    { background-color: var(--color-page); }
+@utility bg-surface { background-color: var(--color-surface); }
+@utility bg-accent  { background-color: var(--color-accent); }
+@utility border-default { border-color: var(--color-border); }
+@utility text-body  { color: var(--color-text); }
+@utility text-muted { color: var(--color-muted); }
+@utility text-subtle { color: var(--color-subtle); }
+@utility text-on-accent { color: var(--color-on-accent); }
+
+/* ── Craft mode extras ───────────────────────────────────────── */
+[data-theme="craft"] body {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='24'%3E%3Cpath d='M5 0 L10 12 L15 0' stroke='%23c4906a' stroke-width='0.8' fill='none' opacity='0.18'/%3E%3Cpath d='M5 24 L10 12 L15 24' stroke='%23c4906a' stroke-width='0.8' fill='none' opacity='0.18'/%3E%3C/svg%3E");
+}
+
+[data-theme="craft"] article {
+  border-width: 2px;
+  border-style: dashed;
 }
 
 /* ── Film grain overlay ─────────────────────────────────────── */
@@ -22,6 +74,9 @@ body::before {
   pointer-events: none;
   z-index: 9999;
 }
+
+[data-theme="dark"] body::before  { opacity: 0.055; }
+[data-theme="craft"] body::before { opacity: 0.02; }
 
 @keyframes grain {
   0%,100% { transform: translate(0,0); }
@@ -41,10 +96,7 @@ body::before {
   from { opacity: 0; transform: translateY(1.25rem); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-.card-enter {
-  animation: fadeInUp 0.5s ease both;
-}
+.card-enter { animation: fadeInUp 0.5s ease both; }
 
 /* ── Marquee ────────────────────────────────────────────────── */
 @keyframes marquee {

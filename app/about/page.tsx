@@ -7,8 +7,8 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="font-serif text-4xl text-stone-800">About</h1>
-      <div className="mt-8 space-y-6 text-stone-600 leading-relaxed">
+      <h1 className="font-serif text-4xl text-body">About</h1>
+      <div className="mt-8 space-y-6 text-muted leading-relaxed">
         <p>
           Lowell Crafts is a small crochet studio making pieces meant to be worn, used, and loved.
           Every item is hooked by hand — no machines, no shortcuts, no two exactly alike.

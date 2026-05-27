@@ -26,8 +26,8 @@ export default function Gallery({ crafts }: { crafts: SanityCraft[] }) {
             onClick={() => setActive(f.value)}
             className={`rounded-full border px-4 py-1.5 text-sm transition-all duration-200 ${
               active === f.value
-                ? "border-stone-800 bg-stone-800 text-stone-50"
-                : "border-stone-200 bg-white text-stone-600 hover:border-stone-400 hover:text-stone-800"
+                ? "border-[var(--color-accent)] bg-accent text-on-accent"
+                : "border-default bg-surface text-muted hover:text-body"
             }`}
           >
             {f.label}
@@ -44,7 +44,7 @@ export default function Gallery({ crafts }: { crafts: SanityCraft[] }) {
       </div>
 
       {filtered.length === 0 && (
-        <p className="py-20 text-center text-stone-400">No items in this category yet.</p>
+        <p className="py-20 text-center text-subtle">No items in this category yet.</p>
       )}
     </div>
   );

@@ -9,14 +9,14 @@ export default async function HomePage() {
     <div>
       <div className="mb-4 text-center">
         <h1
-          className="font-serif font-normal leading-tight text-stone-800"
+          className="font-serif font-normal leading-tight text-body"
           style={{ fontSize: "clamp(2.75rem, 7vw, 6.5rem)" }}
         >
           Crocheted
           <br />
           with Love
         </h1>
-        <p className="mx-auto mt-5 max-w-md text-stone-500 sm:text-lg">
+        <p className="mx-auto mt-5 max-w-md text-muted sm:text-lg">
           Each piece is hooked by hand in small batches — wearables, home goods, amigurumi, and more.
         </p>
       </div>
