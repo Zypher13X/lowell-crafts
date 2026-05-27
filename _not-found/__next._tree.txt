@@ -1,2 +1,2 @@
-:HL["/lowell-crafts/_next/static/chunks/0sl1ydlx~xfej.css","style"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"MJAU2piVbsdkMGP3r6gRN"}
+:HL["/lowell-crafts/_next/static/chunks/0q8vvff5_8g2c.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"/_not-found","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"FAU0VKV2KEQ3WywQy0lfb"}
