@@ -49,7 +49,7 @@ export const PATTERNS: PatternDef[] = [
     id: "hat",
     label: "Bucket Hat",
     description:
-      "Crown, band, and brim. Try a tonal crown with a pop of colour on the band.",
+      "Crown, band, and brim. Try a tonal crown with a pop of color on the band.",
     regions: [
       { id: "crown", label: "Crown", defaultColor: "#DDD0BC" },
       { id: "band",  label: "Band",  defaultColor: "#C96B4A" },
@@ -71,7 +71,7 @@ export const PATTERNS: PatternDef[] = [
     id: "turtle",
     label: "Turtle",
     description:
-      "An amigurumi sea turtle. Colour the shell, hex scales, and body separately.",
+      "An amigurumi sea turtle. Color the shell, hex scales, and body separately.",
     regions: [
       { id: "body",    label: "Body",          defaultColor: "#7A9E7E" },
       { id: "shell",   label: "Shell",         defaultColor: "#9E4B28" },
@@ -104,9 +104,9 @@ export const PATTERNS: PatternDef[] = [
     id: "striped",
     label: "Striped Square",
     description:
-      "Four independently coloured concentric rings — great for experimenting with gradients.",
+      "Four independently colored concentric rings — great for experimenting with gradients.",
     regions: [
-      { id: "ring1", label: "Centre Ring",  defaultColor: "#D4A830" },
+      { id: "ring1", label: "Center Ring",  defaultColor: "#D4A830" },
       { id: "ring2", label: "Second Ring",  defaultColor: "#7A9E7E" },
       { id: "ring3", label: "Third Ring",   defaultColor: "#C96B4A" },
       { id: "ring4", label: "Outer Border", defaultColor: "#3A6B45" },
@@ -116,7 +116,7 @@ export const PATTERNS: PatternDef[] = [
     id: "mitered",
     label: "Mitered Square",
     description:
-      "Two colours split diagonally across the square — simple geometry with striking contrast.",
+      "Two colors split diagonally across the square — simple geometry with striking contrast.",
     regions: [
       { id: "primary",   label: "Primary",   defaultColor: "#D4A830" },
       { id: "secondary", label: "Secondary", defaultColor: "#7A9E7E" },
@@ -127,7 +127,7 @@ export const PATTERNS: PatternDef[] = [
     id: "windmill",
     label: "Windmill",
     description:
-      "Four alternating triangular blades meeting at a centre hub — dynamic and graphic.",
+      "Four alternating triangular blades meeting at a center hub — dynamic and graphic.",
     regions: [
       { id: "blade",     label: "Blades",     defaultColor: "#C96B4A" },
       { id: "alternate", label: "Alternating", defaultColor: "#7A9E7E" },

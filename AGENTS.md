@@ -282,10 +282,11 @@ import FadeIn from "@/components/atoms/FadeIn";
 | Skip `force-static` on `app/sitemap.ts` | Build error: "export const dynamic not configured" |
 | Return empty array from `generateStaticParams` | Build error: treated as "missing" the function entirely |
 | Mention shipping | No shipping on this site — use "Inquire to Order" → contact page |
+| Use British English spelling | Site is American English — color not colour, center not centre, favorite not favourite |
 
 ---
 
-## 13. Colour Studio — SVG Pattern System
+## 13. Color Studio — SVG Pattern System
 
 The `/visualizer` page (`app/visualizer/page.tsx`) wraps `PatternVisualizer` (organism), which renders interactive SVG pattern previews.
 

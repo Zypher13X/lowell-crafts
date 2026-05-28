@@ -10,7 +10,7 @@ function hexPts(cx: number, cy: number, r: number): string {
   }).join(" ");
 }
 
-// 6 surrounding scale centres at distance 84 from shell centre
+// 6 surrounding scale centers at distance 84 from shell center
 const SHELL_CX = 200;
 const SHELL_CY = 205;
 const SCALE_DIST = 84;
@@ -37,7 +37,7 @@ export default function TurtleSVG({ colors, svgId }: Props) {
       viewBox="0 0 400 380"
       xmlns="http://www.w3.org/2000/svg"
       className="w-full"
-      aria-label="Turtle amigurumi colour preview"
+      aria-label="Turtle amigurumi color preview"
       role="img"
     >
       <defs>

@@ -18,7 +18,7 @@ export default function SolidSquareSVG({ colors, svgId }: Props) {
       viewBox="0 0 400 400"
       xmlns="http://www.w3.org/2000/svg"
       className="w-full"
-      aria-label="Solid granny square colour preview"
+      aria-label="Solid granny square color preview"
       role="img"
     >
       <defs>

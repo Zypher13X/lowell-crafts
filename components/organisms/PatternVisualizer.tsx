@@ -159,7 +159,7 @@ export default function PatternVisualizer() {
         {/* Yarn palette */}
         <div>
           <p className="mb-3 text-xs font-medium uppercase tracking-widest text-subtle">
-            Pick a Yarn Colour
+            Pick a Yarn Color
           </p>
           <div className="grid grid-cols-4 gap-2">
             {YARN_COLORS.map((yarn) => {
@@ -197,7 +197,7 @@ export default function PatternVisualizer() {
             })}
           </div>
           <p className="mt-3 text-center text-xs text-subtle">
-            Colouring:{" "}
+            Coloring:{" "}
             <span className="font-medium text-muted">
               {pattern.regions.find((r) => r.id === activeRegion)?.label}
             </span>

@@ -19,7 +19,7 @@ export default function BucketHatSVG({ colors, svgId }: Props) {
       viewBox="0 0 400 360"
       xmlns="http://www.w3.org/2000/svg"
       className="w-full"
-      aria-label="Bucket hat colour preview"
+      aria-label="Bucket hat color preview"
       role="img"
     >
       <defs>

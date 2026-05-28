@@ -18,7 +18,7 @@ export default function MarketToteSVG({ colors, svgId }: Props) {
       viewBox="0 0 400 420"
       xmlns="http://www.w3.org/2000/svg"
       className="w-full"
-      aria-label="Market tote colour preview"
+      aria-label="Market tote color preview"
       role="img"
     >
       <defs>

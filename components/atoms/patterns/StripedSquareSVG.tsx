@@ -26,7 +26,7 @@ export default function StripedSquareSVG({ colors, svgId }: Props) {
       viewBox="0 0 400 400"
       xmlns="http://www.w3.org/2000/svg"
       className="w-full"
-      aria-label="Striped granny square colour preview"
+      aria-label="Striped granny square color preview"
       role="img"
     >
       <defs>
