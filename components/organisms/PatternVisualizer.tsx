@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { PATTERNS, YARN_COLORS, buildDefaultColors, getContrastColor, type PatternColors } from "@/lib/patterns";
+import {
+  PATTERNS, PATTERN_GROUPS, YARN_COLORS, buildDefaultColors,
+  getContrastColor, type PatternColors, type GroupId,
+} from "@/lib/patterns";
 import GrannySquareSVG from "@/components/atoms/patterns/GrannySquareSVG";
 import BucketHatSVG from "@/components/atoms/patterns/BucketHatSVG";
 import MarketToteSVG from "@/components/atoms/patterns/MarketToteSVG";
@@ -25,24 +28,33 @@ const SVG_MAP: Record<string, React.ComponentType<{ colors: Record<string, strin
 };
 
 export default function PatternVisualizer() {
+  const [groupId, setGroupId] = useState<GroupId>("granny");
   const [patternId, setPatternId] = useState("granny");
   const [colors, setColors] = useState<PatternColors>(buildDefaultColors);
   const [activeRegion, setActiveRegion] = useState("center");
 
+  const groupVariants = PATTERNS.filter((p) => p.groupId === groupId);
   const pattern = PATTERNS.find((p) => p.id === patternId)!;
   const PatternSVG = SVG_MAP[patternId];
   const currentColors = colors[patternId];
+
+  function handleGroupChange(gid: GroupId) {
+    const first = PATTERNS.find((p) => p.groupId === gid)!;
+    setGroupId(gid);
+    setPatternId(first.id);
+    setActiveRegion(first.regions[0].id);
+  }
+
+  function handleVariantChange(id: string) {
+    setPatternId(id);
+    setActiveRegion(PATTERNS.find((p) => p.id === id)!.regions[0].id);
+  }
 
   function applyColor(hex: string) {
     setColors((prev) => ({
       ...prev,
       [patternId]: { ...prev[patternId], [activeRegion]: hex },
     }));
-  }
-
-  function handlePatternChange(id: string) {
-    setPatternId(id);
-    setActiveRegion(PATTERNS.find((p) => p.id === id)!.regions[0].id);
   }
 
   function resetColors() {
@@ -71,21 +83,40 @@ export default function PatternVisualizer() {
     <div className="flex flex-col gap-10 lg:flex-row lg:items-start">
       {/* ── Left: Preview ───────────────────────────────── */}
       <div className="flex flex-col gap-5 lg:flex-1">
-        {/* Pattern tabs */}
-        {PATTERNS.length > 1 && (
-          <div className="flex gap-2">
-            {PATTERNS.map((p) => (
+
+        {/* Group tabs */}
+        <div className="flex flex-wrap gap-2">
+          {PATTERN_GROUPS.map((g) => (
+            <button
+              key={g.id}
+              onClick={() => handleGroupChange(g.id)}
+              aria-pressed={groupId === g.id}
+              className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
+                groupId === g.id
+                  ? "border-[var(--color-accent)] bg-accent text-on-accent"
+                  : "border-default bg-surface text-muted hover:text-body"
+              }`}
+            >
+              {g.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Variant sub-selector — only shown when group has multiple patterns */}
+        {groupVariants.length > 1 && (
+          <div className="flex flex-wrap gap-1.5">
+            {groupVariants.map((p) => (
               <button
                 key={p.id}
-                onClick={() => handlePatternChange(p.id)}
+                onClick={() => handleVariantChange(p.id)}
                 aria-pressed={patternId === p.id}
-                className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
+                className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                   patternId === p.id
                     ? "border-[var(--color-accent)] bg-accent text-on-accent"
                     : "border-default bg-surface text-muted hover:text-body"
                 }`}
               >
-                {p.label}
+                {p.shortLabel}
               </button>
             ))}
           </div>
