@@ -3,30 +3,11 @@ interface Props {
   svgId?: string;
 }
 
-function hexPts(cx: number, cy: number, r: number): string {
-  return Array.from({ length: 6 }, (_, i) => {
-    const a = ((i * 60 - 30) * Math.PI) / 180;
-    return `${+(cx + r * Math.cos(a)).toFixed(1)},${+(cy + r * Math.sin(a)).toFixed(1)}`;
-  }).join(" ");
-}
-
-// 6 surrounding scale centers at distance 84 from shell center
-const SHELL_CX = 200;
-const SHELL_CY = 205;
-const SCALE_DIST = 84;
-const SURROUNDING = Array.from({ length: 6 }, (_, i) => {
-  const a = (i * 60 * Math.PI) / 180;
-  return {
-    cx: +(SHELL_CX + SCALE_DIST * Math.cos(a)).toFixed(1),
-    cy: +(SHELL_CY + SCALE_DIST * Math.sin(a)).toFixed(1),
-  };
-});
-
 export default function TurtleSVG({ colors, svgId }: Props) {
   const {
-    body    = "#7A9E7E",
-    shell   = "#9E4B28",
-    pattern = "#D4A830",
+    shell    = "#7A9E7E",
+    flippers = "#DDD0BC",
+    body     = "#C8A878",
   } = colors;
 
   const pid = svgId ?? "turtle-default";
@@ -34,7 +15,7 @@ export default function TurtleSVG({ colors, svgId }: Props) {
   return (
     <svg
       id={svgId}
-      viewBox="0 0 400 380"
+      viewBox="0 0 400 420"
       xmlns="http://www.w3.org/2000/svg"
       className="w-full"
       aria-label="Turtle amigurumi color preview"
@@ -43,68 +24,109 @@ export default function TurtleSVG({ colors, svgId }: Props) {
       <defs>
         <pattern
           id={`${pid}-dots`}
-          x="0" y="0" width="12" height="12"
+          x="0" y="0" width="10" height="10"
           patternUnits="userSpaceOnUse"
         >
-          <circle cx="6" cy="6" r="1.6" fill="black" fillOpacity="0.055" />
+          <circle cx="5" cy="5" r="1.4" fill="black" fillOpacity="0.06" />
         </pattern>
-        <clipPath id={`${pid}-shell-clip`}>
-          <ellipse cx={SHELL_CX} cy={SHELL_CY} rx="134" ry="118" />
-        </clipPath>
+        {/* Radial highlight to give the shell a dome feel */}
+        <radialGradient id={`${pid}-dome`} cx="42%" cy="38%" r="55%">
+          <stop offset="0%"   stopColor="white" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="black" stopOpacity="0.08" />
+        </radialGradient>
       </defs>
 
       {/* ── Drop shadow ─────────────────────────────────── */}
-      <ellipse cx="200" cy="370" rx="148" ry="10" fill="black" fillOpacity="0.07" />
+      <ellipse cx="200" cy="408" rx="158" ry="10" fill="black" fillOpacity="0.07" />
 
-      {/* ── Body (drawn first — legs + head + tail poke out) */}
-      <ellipse cx="200" cy="210" rx="170" ry="152" fill={body} />
+      {/* ── Body base (shows around shell edges) ────────── */}
+      <ellipse cx="200" cy="218" rx="148" ry="130" fill={body} />
+      <ellipse cx="200" cy="218" rx="148" ry="130" fill={`url(#${pid}-dots)`} />
 
-      {/* Head */}
-      <ellipse cx="200" cy="56" rx="28" ry="26" fill={body} />
-      {/* Neck connecting head to body */}
-      <rect x="184" y="52" width="32" height="30" rx="8" fill={body} />
-
-      {/* Front legs */}
-      <ellipse cx="52" cy="134" rx="30" ry="17" fill={body} transform="rotate(-38 52 134)" />
-      <ellipse cx="348" cy="134" rx="30" ry="17" fill={body} transform="rotate(38 348 134)" />
-
-      {/* Back legs */}
-      <ellipse cx="68" cy="288" rx="30" ry="17" fill={body} transform="rotate(34 68 288)" />
-      <ellipse cx="332" cy="288" rx="30" ry="17" fill={body} transform="rotate(-34 332 288)" />
-
-      {/* Tail */}
-      <ellipse cx="200" cy="358" rx="11" ry="16" fill={body} />
-
-      {/* Body texture */}
-      <ellipse cx="200" cy="210" rx="170" ry="152" fill={`url(#${pid}-dots)`} />
-
-      {/* ── Shell base ──────────────────────────────────── */}
-      <ellipse cx={SHELL_CX} cy={SHELL_CY} rx="134" ry="118" fill={shell} />
-
-      {/* ── Hexagonal scale pattern ─────────────────────── */}
-      {/* Center scale */}
-      <polygon points={hexPts(SHELL_CX, SHELL_CY, 40)} fill={pattern} />
-
-      {/* 6 surrounding scales */}
-      {SURROUNDING.map(({ cx, cy }, i) => (
-        <polygon key={i} points={hexPts(cx, cy, 37)} fill={pattern} />
-      ))}
-
-      {/* Shell texture overlay */}
-      <ellipse cx={SHELL_CX} cy={SHELL_CY} rx="134" ry="118" fill={`url(#${pid}-dots)`} />
-
-      {/* Shell edge highlight */}
+      {/* ── Front flippers ──────────────────────────────── */}
+      {/* Front-left — wide paddle angled up-left */}
       <ellipse
-        cx={SHELL_CX} cy={SHELL_CY} rx="134" ry="118"
-        fill="none" stroke="black" strokeOpacity="0.07" strokeWidth="3"
+        cx="75" cy="118"
+        rx="40" ry="78"
+        fill={flippers}
+        transform="rotate(-42 75 118)"
+      />
+      <ellipse
+        cx="75" cy="118"
+        rx="40" ry="78"
+        fill={`url(#${pid}-dots)`}
+        transform="rotate(-42 75 118)"
+      />
+      {/* Front-right */}
+      <ellipse
+        cx="325" cy="118"
+        rx="40" ry="78"
+        fill={flippers}
+        transform="rotate(42 325 118)"
+      />
+      <ellipse
+        cx="325" cy="118"
+        rx="40" ry="78"
+        fill={`url(#${pid}-dots)`}
+        transform="rotate(42 325 118)"
       />
 
+      {/* ── Back flippers — shorter, angled downward ─────── */}
+      {/* Back-left */}
+      <ellipse
+        cx="84" cy="308"
+        rx="34" ry="62"
+        fill={flippers}
+        transform="rotate(32 84 308)"
+      />
+      <ellipse
+        cx="84" cy="308"
+        rx="34" ry="62"
+        fill={`url(#${pid}-dots)`}
+        transform="rotate(32 84 308)"
+      />
+      {/* Back-right */}
+      <ellipse
+        cx="316" cy="308"
+        rx="34" ry="62"
+        fill={flippers}
+        transform="rotate(-32 316 308)"
+      />
+      <ellipse
+        cx="316" cy="308"
+        rx="34" ry="62"
+        fill={`url(#${pid}-dots)`}
+        transform="rotate(-32 316 308)"
+      />
+
+      {/* ── Shell dome (sits on top of body/flippers) ─────── */}
+      <ellipse cx="200" cy="210" rx="132" ry="118" fill={shell} />
+      {/* Dome highlight + depth */}
+      <ellipse cx="200" cy="210" rx="132" ry="118" fill={`url(#${pid}-dome)`} />
+      <ellipse cx="200" cy="210" rx="132" ry="118" fill={`url(#${pid}-dots)`} />
+      {/* Shell edge */}
+      <ellipse
+        cx="200" cy="210" rx="132" ry="118"
+        fill="none" stroke="black" strokeOpacity="0.08" strokeWidth="2.5"
+      />
+
+      {/* ── Head ────────────────────────────────────────── */}
+      {/* Neck connecting head to shell front */}
+      <ellipse cx="200" cy="90" rx="22" ry="16" fill={body} />
+      {/* Round prominent head */}
+      <ellipse cx="200" cy="60" rx="34" ry="31" fill={body} />
+      <ellipse cx="200" cy="60" rx="34" ry="31" fill={`url(#${pid}-dots)`} />
+
+      {/* ── Tail ────────────────────────────────────────── */}
+      <ellipse cx="200" cy="362" rx="13" ry="20" fill={body} />
+      <ellipse cx="200" cy="362" rx="13" ry="20" fill={`url(#${pid}-dots)`} />
+
       {/* ── Eyes ────────────────────────────────────────── */}
-      <circle cx="191" cy="50" r="4" fill="black" fillOpacity="0.5" />
-      <circle cx="209" cy="50" r="4" fill="black" fillOpacity="0.5" />
-      {/* Eye shine */}
-      <circle cx="193" cy="48" r="1.5" fill="white" fillOpacity="0.7" />
-      <circle cx="211" cy="48" r="1.5" fill="white" fillOpacity="0.7" />
+      <circle cx="188" cy="53" r="5.5" fill="black" fillOpacity="0.55" />
+      <circle cx="212" cy="53" r="5.5" fill="black" fillOpacity="0.55" />
+      {/* Shine */}
+      <circle cx="190" cy="51" r="2"   fill="white" fillOpacity="0.75" />
+      <circle cx="214" cy="51" r="2"   fill="white" fillOpacity="0.75" />
     </svg>
   );
 }

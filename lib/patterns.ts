@@ -159,11 +159,11 @@ export const PATTERNS: PatternDef[] = [
     shortLabel: "Turtle",
     groupId: "turtle",
     description:
-      "An amigurumi sea turtle. Color the shell, hex scales, and body separately.",
+      "An amigurumi sea turtle with a rounded dome shell and big paddle flippers. Color the shell, flippers, and body separately.",
     regions: [
-      { id: "body",    label: "Body",          defaultColor: "#7A9E7E" },
-      { id: "shell",   label: "Shell",         defaultColor: "#9E4B28" },
-      { id: "pattern", label: "Scale Pattern", defaultColor: "#D4A830" },
+      { id: "shell",    label: "Shell",        defaultColor: "#7A9E7E" },
+      { id: "flippers", label: "Flippers",     defaultColor: "#DDD0BC" },
+      { id: "body",     label: "Body & Head",  defaultColor: "#C8A878" },
     ],
   },
 ];
