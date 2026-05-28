@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import Dropdown, { type DropdownOption } from "@/components/molecules/Dropdown";
 import { useTheme, type Theme } from "@/components/providers/ThemeProvider";
 
 function SunIcon() {
@@ -39,7 +39,7 @@ function YarnIcon() {
   );
 }
 
-const OPTIONS: { value: Theme; label: string; icon: React.ReactNode }[] = [
+const OPTIONS: DropdownOption<Theme>[] = [
   { value: "light", label: "Light", icon: <SunIcon /> },
   { value: "dark",  label: "Dark",  icon: <MoonIcon /> },
   { value: "craft", label: "Craft", icon: <YarnIcon /> },
@@ -47,85 +47,14 @@ const OPTIONS: { value: Theme; label: string; icon: React.ReactNode }[] = [
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  const current = OPTIONS.find((o) => o.value === theme) ?? OPTIONS[0];
-
-  useEffect(() => {
-    function handleOutsideClick(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    }
-    function handleKeyDown(e: KeyboardEvent) {
-      if (!open) return;
-      if (e.key === "Escape") {
-        setOpen(false);
-        buttonRef.current?.focus();
-      }
-    }
-    document.addEventListener("mousedown", handleOutsideClick);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (open) {
-      const first = menuRef.current?.querySelector<HTMLElement>("[role='menuitem']");
-      first?.focus();
-    }
-  }, [open]);
+  const currentLabel = OPTIONS.find((o) => o.value === theme)?.label ?? "Light";
 
   return (
-    <div ref={ref} className="relative">
-      <button
-        ref={buttonRef}
-        onClick={() => setOpen((v) => !v)}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-label={`Theme: ${current.label}`}
-        className="flex items-center gap-1.5 rounded-full border border-default px-3 py-1.5 text-xs text-muted transition-colors hover:text-body focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
-      >
-        {current.icon}
-        <span aria-hidden="true">{current.label}</span>
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className={`transition-transform duration-150 ${open ? "rotate-180" : ""}`} aria-hidden="true">
-          <polyline points="6 9 12 15 18 9"/>
-        </svg>
-      </button>
-
-      {open && (
-        <div
-          ref={menuRef}
-          role="menu"
-          aria-label="Select theme"
-          className="absolute right-0 top-full mt-1.5 w-36 overflow-hidden rounded-lg border border-default bg-surface shadow-lg"
-        >
-          {OPTIONS.map((opt) => (
-            <button
-              key={opt.value}
-              role="menuitem"
-              onClick={() => { setTheme(opt.value); setOpen(false); buttonRef.current?.focus(); }}
-              className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-sm transition-colors hover:bg-[var(--color-border)]/20 focus:outline-none focus:bg-[var(--color-border)]/30 ${
-                theme === opt.value ? "text-body font-medium" : "text-muted"
-              }`}
-            >
-              {opt.icon}
-              {opt.label}
-              {theme === opt.value && (
-                <svg className="ml-auto" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-              )}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+    <Dropdown
+      options={OPTIONS}
+      value={theme}
+      onChange={setTheme}
+      triggerLabel={`Theme: ${currentLabel}`}
+    />
   );
 }

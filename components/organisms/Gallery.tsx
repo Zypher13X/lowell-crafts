@@ -3,6 +3,7 @@
 import { useState, useRef, useMemo } from "react";
 import type { SanityCraft, Category } from "@/lib/queries";
 import CraftCard from "@/components/organisms/CraftCard";
+import Dropdown from "@/components/molecules/Dropdown";
 import { useFavorites } from "@/lib/useFavorites";
 
 const FILTERS: { label: string; value: Category | "all" | "saved" }[] = [
@@ -18,7 +19,7 @@ const SORT_OPTIONS = [
   { label: "Featured", value: "featured" },
   { label: "Price: Low to High", value: "price-asc" },
   { label: "Price: High to Low", value: "price-desc" },
-] as const;
+] as const satisfies readonly { label: string; value: string }[];
 
 type SortValue = (typeof SORT_OPTIONS)[number]["value"];
 
@@ -84,21 +85,12 @@ export default function Gallery({ crafts }: { crafts: SanityCraft[] }) {
           />
         </div>
 
-        <label className="flex items-center gap-2 text-sm text-muted">
-          <span className="sr-only">Sort by</span>
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value as SortValue)}
-            aria-label="Sort by"
-            className="rounded-full border border-default bg-surface px-3 py-1.5 text-sm text-body focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]"
-          >
-            {SORT_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
-              </option>
-            ))}
-          </select>
-        </label>
+        <Dropdown
+          options={SORT_OPTIONS}
+          value={sort}
+          onChange={setSort}
+          triggerLabel="Sort by"
+        />
       </div>
 
       <div className="mb-8 flex flex-wrap gap-2">
