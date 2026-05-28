@@ -7,6 +7,7 @@ import ThemeToggle from "@/components/molecules/ThemeToggle";
 
 const NAV_LINKS = [
   { href: "/", label: "Shop" },
+  { href: "/visualizer", label: "Studio" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
