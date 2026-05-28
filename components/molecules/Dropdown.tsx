@@ -54,7 +54,10 @@ export default function Dropdown<T extends string>({
 
   useEffect(() => {
     if (open) {
-      menuRef.current?.querySelector<HTMLElement>("[role='menuitem']")?.focus();
+      const items = menuRef.current?.querySelectorAll<HTMLElement>("[role='menuitem']");
+      if (!items?.length) return;
+      const activeIndex = options.findIndex((o) => o.value === value);
+      (items[activeIndex >= 0 ? activeIndex : 0] ?? items[0]).focus();
     }
   }, [open]);
 

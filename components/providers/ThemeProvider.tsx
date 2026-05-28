@@ -7,11 +7,12 @@ export type Theme = "light" | "dark" | "craft";
 const VALID: Theme[] = ["light", "dark", "craft"];
 
 function readTheme(): Theme {
-  // Reads the data-theme attribute already set by the anti-flash script,
-  // so the initial state always matches the DOM — no toggle flicker.
   if (typeof window === "undefined") return "light";
-  const attr = document.documentElement.getAttribute("data-theme") as Theme;
-  return VALID.includes(attr) ? attr : "light";
+  try {
+    const stored = localStorage.getItem("theme") as Theme | null;
+    if (stored && VALID.includes(stored)) return stored;
+  } catch {}
+  return "light";
 }
 
 const ThemeContext = createContext<{

@@ -53,15 +53,14 @@ export default function TurtleSVG({ colors, svgId }: Props) {
       <ellipse cx="200" cy="215" rx="148" ry="130" fill={`url(#${pid}-dots)`} />
 
       {/* ── Head ────────────────────────────────────────── */}
-      <ellipse cx="200" cy="90"  rx="22" ry="16" fill={head} />
-      <ellipse cx="200" cy="60"  rx="34" ry="31" fill={head} />
-      <ellipse cx="200" cy="60"  rx="34" ry="31" fill={`url(#${pid}-dots)`} />
+      <ellipse cx="200" cy="58"  rx="62" ry="54" fill={head} />
+      <ellipse cx="200" cy="58"  rx="62" ry="54" fill={`url(#${pid}-dots)`} />
 
       {/* ── Eyes ────────────────────────────────────────── */}
-      <circle cx="188" cy="53" r="5.5" fill="black" fillOpacity="0.55" />
-      <circle cx="212" cy="53" r="5.5" fill="black" fillOpacity="0.55" />
-      <circle cx="190" cy="51" r="2"   fill="white" fillOpacity="0.75" />
-      <circle cx="214" cy="51" r="2"   fill="white" fillOpacity="0.75" />
+      <circle cx="178" cy="46" r="10"  fill="black" fillOpacity="0.55" />
+      <circle cx="222" cy="46" r="10"  fill="black" fillOpacity="0.55" />
+      <circle cx="180" cy="44" r="3"   fill="white" fillOpacity="0.75" />
+      <circle cx="224" cy="44" r="3"   fill="white" fillOpacity="0.75" />
     </svg>
   );
 }
