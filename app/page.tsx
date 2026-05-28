@@ -1,5 +1,6 @@
 import Gallery from "@/components/organisms/Gallery";
 import Marquee from "@/components/organisms/Marquee";
+import Testimonials from "@/components/organisms/Testimonials";
 import { getCrafts } from "@/lib/queries";
 
 export default async function HomePage() {
@@ -24,6 +25,8 @@ export default async function HomePage() {
       <Marquee />
 
       <Gallery crafts={crafts} />
+
+      <Testimonials />
     </div>
   );
 }
