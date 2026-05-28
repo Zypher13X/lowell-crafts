@@ -45,6 +45,39 @@ export const PATTERNS: PatternDef[] = [
       { id: "border", label: "Border",      defaultColor: "#3A6B45" },
     ],
   },
+  {
+    id: "hat",
+    label: "Bucket Hat",
+    description:
+      "Crown, band, and brim. Try a tonal crown with a pop of colour on the band.",
+    regions: [
+      { id: "crown", label: "Crown", defaultColor: "#DDD0BC" },
+      { id: "band",  label: "Band",  defaultColor: "#C96B4A" },
+      { id: "brim",  label: "Brim",  defaultColor: "#DDD0BC" },
+    ],
+  },
+  {
+    id: "tote",
+    label: "Market Tote",
+    description:
+      "A chunky cotton tote. Match handles to accent, or go full contrast.",
+    regions: [
+      { id: "body",    label: "Body",          defaultColor: "#F5EDD8" },
+      { id: "handles", label: "Handles",       defaultColor: "#C96B4A" },
+      { id: "accent",  label: "Accent Stripe", defaultColor: "#7A9E7E" },
+    ],
+  },
+  {
+    id: "turtle",
+    label: "Turtle",
+    description:
+      "An amigurumi sea turtle. Colour the shell, hex scales, and body separately.",
+    regions: [
+      { id: "body",    label: "Body",          defaultColor: "#7A9E7E" },
+      { id: "shell",   label: "Shell",         defaultColor: "#9E4B28" },
+      { id: "pattern", label: "Scale Pattern", defaultColor: "#D4A830" },
+    ],
+  },
 ];
 
 export type ColorMap = Record<string, string>;

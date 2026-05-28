@@ -3,9 +3,15 @@
 import { useState } from "react";
 import { PATTERNS, YARN_COLORS, buildDefaultColors, getContrastColor, type PatternColors } from "@/lib/patterns";
 import GrannySquareSVG from "@/components/atoms/patterns/GrannySquareSVG";
+import BucketHatSVG from "@/components/atoms/patterns/BucketHatSVG";
+import MarketToteSVG from "@/components/atoms/patterns/MarketToteSVG";
+import TurtleSVG from "@/components/atoms/patterns/TurtleSVG";
 
 const SVG_MAP: Record<string, React.ComponentType<{ colors: Record<string, string>; svgId?: string }>> = {
   granny: GrannySquareSVG,
+  hat:    BucketHatSVG,
+  tote:   MarketToteSVG,
+  turtle: TurtleSVG,
 };
 
 export default function PatternVisualizer() {
