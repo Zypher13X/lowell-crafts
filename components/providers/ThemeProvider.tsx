@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useLayoutEffect } from "react";
 
 export type Theme = "light" | "dark" | "craft";
 
@@ -25,6 +25,13 @@ export function useTheme() {
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(readTheme);
+
+  // Re-apply after hydration in case Next.js reconciled data-theme back to
+  // the server-rendered default. useLayoutEffect runs before the browser paints
+  // so there is no visible flash.
+  useLayoutEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   function setTheme(t: Theme) {
     document.documentElement.classList.add("theme-transitioning");

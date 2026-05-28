@@ -59,7 +59,7 @@ export default function Dropdown<T extends string>({
   }, [open]);
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative w-fit">
       <button
         ref={buttonRef}
         onClick={() => setOpen((v) => !v)}
