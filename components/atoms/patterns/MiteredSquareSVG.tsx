@@ -29,41 +29,40 @@ export default function MiteredSquareSVG({ colors, svgId }: Props) {
         >
           <circle cx="6" cy="6" r="1.5" fill="black" fillOpacity="0.05" />
         </pattern>
-        <clipPath id={`${pid}-sq-clip`}>
-          <rect x="14" y="14" width="372" height="372" rx="18" />
+        {/* Triangles are clipped to inner rect so the border frame shows */}
+        <clipPath id={`${pid}-inner-clip`}>
+          <rect x="38" y="38" width="324" height="324" rx="10" />
         </clipPath>
       </defs>
 
       {/* Drop shadow */}
       <rect x="18" y="18" width="364" height="364" rx="20" fill="black" fillOpacity="0.07" />
 
-      {/* Border square */}
+      {/* Border frame */}
       <rect x="14" y="14" width="372" height="372" rx="18" fill={border} />
+      {/* Border stitch outline */}
+      <rect x="26" y="26" width="348" height="348" rx="16"
+        fill="none" stroke="black" strokeOpacity="0.06" strokeWidth="1.5" strokeDasharray="10,7" />
 
-      {/* Primary triangle: top-left + top-right + bottom-right */}
-      <g clipPath={`url(#${pid}-sq-clip)`}>
-        <polygon points="14,14 386,14 386,386" fill={primary} />
-        {/* Secondary triangle: top-left + bottom-left + bottom-right */}
-        <polygon points="14,14 14,386 386,386" fill={secondary} />
+      {/* Triangles clipped to inner rect — border frame stays visible */}
+      <g clipPath={`url(#${pid}-inner-clip)`}>
+        <polygon points="38,38 362,38 362,362" fill={primary} />
+        <polygon points="38,38 38,362 362,362" fill={secondary} />
 
         {/* Diagonal ridge lines */}
-        {[0, 18, 36].map((offset) => (
+        {[0, 16, 32].map((offset) => (
           <line
             key={offset}
-            x1={14 + offset} y1={14 + offset}
-            x2={386 - offset} y2={386 - offset}
+            x1={38 + offset} y1={38 + offset}
+            x2={362 - offset} y2={362 - offset}
             stroke="black" strokeOpacity="0.08"
             strokeWidth="1.5" strokeDasharray="10,6"
           />
         ))}
 
         {/* Texture */}
-        <rect x="14" y="14" width="372" height="372" rx="18" fill={`url(#${pid}-dots)`} />
+        <rect x="38" y="38" width="324" height="324" fill={`url(#${pid}-dots)`} />
       </g>
-
-      {/* Border stitch outline */}
-      <rect x="26" y="26" width="348" height="348" rx="16"
-        fill="none" stroke="black" strokeOpacity="0.06" strokeWidth="1.5" strokeDasharray="10,7" />
     </svg>
   );
 }
