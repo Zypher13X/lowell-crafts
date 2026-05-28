@@ -27,11 +27,27 @@ const SVG_MAP: Record<string, React.ComponentType<{ colors: Record<string, strin
   windmill:  WindmillSVG,
 };
 
+const STORAGE_GROUP   = "lc-studio-group";
+const STORAGE_PATTERN = "lc-studio-pattern";
+
+function readStored(): { groupId: GroupId; patternId: string } {
+  try {
+    const gid = localStorage.getItem(STORAGE_GROUP) as GroupId | null;
+    const pid = localStorage.getItem(STORAGE_PATTERN);
+    const validGroup   = gid && PATTERN_GROUPS.find((g) => g.id === gid);
+    const validPattern = pid && PATTERNS.find((p) => p.id === pid && p.groupId === gid);
+    if (validGroup && validPattern) return { groupId: gid!, patternId: pid! };
+  } catch {}
+  return { groupId: "granny", patternId: "granny" };
+}
+
 export default function PatternVisualizer() {
-  const [groupId, setGroupId] = useState<GroupId>("granny");
-  const [patternId, setPatternId] = useState("granny");
-  const [colors, setColors] = useState<PatternColors>(buildDefaultColors);
-  const [activeRegion, setActiveRegion] = useState("center");
+  const [groupId, setGroupId]     = useState<GroupId>(() => readStored().groupId);
+  const [patternId, setPatternId] = useState(() => readStored().patternId);
+  const [colors, setColors]       = useState<PatternColors>(buildDefaultColors);
+  const [activeRegion, setActiveRegion] = useState(
+    () => PATTERNS.find((p) => p.id === readStored().patternId)!.regions[0].id
+  );
 
   const groupVariants = PATTERNS.filter((p) => p.groupId === groupId);
   const pattern = PATTERNS.find((p) => p.id === patternId)!;
@@ -43,11 +59,18 @@ export default function PatternVisualizer() {
     setGroupId(gid);
     setPatternId(first.id);
     setActiveRegion(first.regions[0].id);
+    try {
+      localStorage.setItem(STORAGE_GROUP, gid);
+      localStorage.setItem(STORAGE_PATTERN, first.id);
+    } catch {}
   }
 
   function handleVariantChange(id: string) {
     setPatternId(id);
     setActiveRegion(PATTERNS.find((p) => p.id === id)!.regions[0].id);
+    try {
+      localStorage.setItem(STORAGE_PATTERN, id);
+    } catch {}
   }
 
   function applyColor(hex: string) {
