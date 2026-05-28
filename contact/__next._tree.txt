@@ -1,3 +1,3 @@
-:HL["/lowell-crafts/_next/static/chunks/15nnd4rnvzp1~.css","style"]
+:HL["/lowell-crafts/_next/static/chunks/0_gbsa.ni1a4_.css","style"]
 :HL["/lowell-crafts/_next/static/media/8c2eb9ceedecfc8e-s.p.0oeo8epbafgia.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"tree":{"name":"","param":null,"prefetchHints":20,"slots":{"children":{"name":"contact","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"pXhu0LDWdcr7lLl3Or3g_"}
+0:{"tree":{"name":"","param":null,"prefetchHints":20,"slots":{"children":{"name":"contact","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"d6QW4aITLehle2Q3e8_-a"}
