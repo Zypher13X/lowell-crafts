@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useMemo } from "react";
+import { useState, useMemo } from "react";
 import type { SanityCraft, Category } from "@/lib/queries";
 import CraftCard from "@/components/organisms/CraftCard";
 import Dropdown from "@/components/molecules/Dropdown";
@@ -27,11 +27,11 @@ export default function Gallery({ crafts }: { crafts: SanityCraft[] }) {
   const [active, setActive] = useState<Category | "all" | "saved">("all");
   const [sort, setSort] = useState<SortValue>("featured");
   const [search, setSearch] = useState("");
-  const animKey = useRef(0);
+  const [animKey, setAnimKey] = useState(0);
   const { favorites, toggle, isFavorited } = useFavorites();
 
   function handleFilter(value: Category | "all" | "saved") {
-    animKey.current += 1;
+    setAnimKey((k) => k + 1);
     setActive(value);
   }
 
@@ -118,7 +118,7 @@ export default function Gallery({ crafts }: { crafts: SanityCraft[] }) {
 
       <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
         {filtered.map((craft, i) => (
-          <div key={`${animKey.current}-${craft._id}`} className="mb-6 break-inside-avoid">
+          <div key={`${animKey}-${craft._id}`} className="mb-6 break-inside-avoid">
             <CraftCard
               craft={craft}
               index={i}

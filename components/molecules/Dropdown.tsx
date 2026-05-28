@@ -59,7 +59,7 @@ export default function Dropdown<T extends string>({
       const activeIndex = options.findIndex((o) => o.value === value);
       (items[activeIndex >= 0 ? activeIndex : 0] ?? items[0]).focus();
     }
-  }, [open]);
+  }, [open, options, value]);
 
   return (
     <div ref={ref} className="relative w-fit">

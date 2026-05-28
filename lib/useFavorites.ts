@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 
 const STORAGE_KEY = "lowell-crafts-favorites";
 
@@ -14,11 +14,7 @@ function readFavorites(): Set<string> {
 }
 
 export function useFavorites() {
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    setFavorites(readFavorites());
-  }, []);
+  const [favorites, setFavorites] = useState<Set<string>>(readFavorites);
 
   const toggle = useCallback((id: string) => {
     setFavorites((prev) => {
