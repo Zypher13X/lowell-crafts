@@ -6,12 +6,22 @@ import GrannySquareSVG from "@/components/atoms/patterns/GrannySquareSVG";
 import BucketHatSVG from "@/components/atoms/patterns/BucketHatSVG";
 import MarketToteSVG from "@/components/atoms/patterns/MarketToteSVG";
 import TurtleSVG from "@/components/atoms/patterns/TurtleSVG";
+import SolidSquareSVG from "@/components/atoms/patterns/SolidSquareSVG";
+import SunflowerSVG from "@/components/atoms/patterns/SunflowerSVG";
+import StripedSquareSVG from "@/components/atoms/patterns/StripedSquareSVG";
+import MiteredSquareSVG from "@/components/atoms/patterns/MiteredSquareSVG";
+import WindmillSVG from "@/components/atoms/patterns/WindmillSVG";
 
 const SVG_MAP: Record<string, React.ComponentType<{ colors: Record<string, string>; svgId?: string }>> = {
-  granny: GrannySquareSVG,
-  hat:    BucketHatSVG,
-  tote:   MarketToteSVG,
-  turtle: TurtleSVG,
+  granny:    GrannySquareSVG,
+  hat:       BucketHatSVG,
+  tote:      MarketToteSVG,
+  turtle:    TurtleSVG,
+  solid:     SolidSquareSVG,
+  sunflower: SunflowerSVG,
+  striped:   StripedSquareSVG,
+  mitered:   MiteredSquareSVG,
+  windmill:  WindmillSVG,
 };
 
 export default function PatternVisualizer() {

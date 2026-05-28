@@ -91,6 +91,19 @@ body::before {
   90%      { transform: translate(-10%,10%); }
 }
 
+/* ── Theme switch transitions ───────────────────────────────── */
+/* Applied only while switching — avoids interfering with load or other animations */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-transitioning *,
+  .theme-transitioning *::before,
+  .theme-transitioning *::after {
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease !important;
+  }
+}
+
 /* ── Card entrance animation ────────────────────────────────── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(1.25rem); }

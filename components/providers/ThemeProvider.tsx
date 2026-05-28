@@ -27,13 +27,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>(readTheme);
 
   function setTheme(t: Theme) {
+    document.documentElement.classList.add("theme-transitioning");
     setThemeState(t);
+    document.documentElement.setAttribute("data-theme", t);
     try {
       localStorage.setItem("theme", t);
-      document.documentElement.setAttribute("data-theme", t);
     } catch {
-      // localStorage unavailable (private browsing) — visual change still applied
+      // localStorage unavailable in private browsing — visual change still applied
     }
+    setTimeout(() => document.documentElement.classList.remove("theme-transitioning"), 300);
   }
 
   return (

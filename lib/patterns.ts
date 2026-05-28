@@ -78,6 +78,62 @@ export const PATTERNS: PatternDef[] = [
       { id: "pattern", label: "Scale Pattern", defaultColor: "#D4A830" },
     ],
   },
+  {
+    id: "solid",
+    label: "Solid Square",
+    description:
+      "Three filled concentric squares with no open corners — clean, bold, and modern.",
+    regions: [
+      { id: "center", label: "Center", defaultColor: "#D4A830" },
+      { id: "ring",   label: "Ring",   defaultColor: "#7A9E7E" },
+      { id: "border", label: "Border", defaultColor: "#3A6B45" },
+    ],
+  },
+  {
+    id: "sunflower",
+    label: "Sunflower",
+    description:
+      "Eight rounded petals radiate from a central circle — inspired by the classic sunburst motif.",
+    regions: [
+      { id: "center", label: "Center", defaultColor: "#D4A830" },
+      { id: "petals", label: "Petals", defaultColor: "#C96B4A" },
+      { id: "border", label: "Border", defaultColor: "#3A6B45" },
+    ],
+  },
+  {
+    id: "striped",
+    label: "Striped Square",
+    description:
+      "Four independently coloured concentric rings — great for experimenting with gradients.",
+    regions: [
+      { id: "ring1", label: "Centre Ring",  defaultColor: "#D4A830" },
+      { id: "ring2", label: "Second Ring",  defaultColor: "#7A9E7E" },
+      { id: "ring3", label: "Third Ring",   defaultColor: "#C96B4A" },
+      { id: "ring4", label: "Outer Border", defaultColor: "#3A6B45" },
+    ],
+  },
+  {
+    id: "mitered",
+    label: "Mitered Square",
+    description:
+      "Two colours split diagonally across the square — simple geometry with striking contrast.",
+    regions: [
+      { id: "primary",   label: "Primary",   defaultColor: "#D4A830" },
+      { id: "secondary", label: "Secondary", defaultColor: "#7A9E7E" },
+      { id: "border",    label: "Border",    defaultColor: "#3A6B45" },
+    ],
+  },
+  {
+    id: "windmill",
+    label: "Windmill",
+    description:
+      "Four alternating triangular blades meeting at a centre hub — dynamic and graphic.",
+    regions: [
+      { id: "blade",     label: "Blades",     defaultColor: "#C96B4A" },
+      { id: "alternate", label: "Alternating", defaultColor: "#7A9E7E" },
+      { id: "center",    label: "Hub",         defaultColor: "#D4A830" },
+    ],
+  },
 ];
 
 export type ColorMap = Record<string, string>;

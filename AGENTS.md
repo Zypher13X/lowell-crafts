@@ -102,6 +102,22 @@ lib/
 - Client components are marked `"use client"` at the top; server components have no directive
 - Hooks (`use*.ts`) live in `lib/`, not in `components/`
 
+### Shared Dropdown molecule
+
+`components/molecules/Dropdown.tsx` is a generic `Dropdown<T extends string>` used by **both** ThemeToggle and Gallery sort. Never use a native `<select>` or build a one-off custom dropdown — compose this instead.
+
+```tsx
+<Dropdown<SortValue>
+  options={SORT_OPTIONS}  // { label, value, icon? }[]
+  value={sort}
+  onChange={setSort}
+  triggerLabel="Sort by"
+  align="right"           // or "left"
+/>
+```
+
+Dropdown handles: outside-click close, Escape + focus return, focus-first-item on open, `aria-haspopup="menu"`, `aria-expanded`, `role="menu"`, `role="menuitem"`, checkmark on active item.
+
 ---
 
 ## 5. Styling (Tailwind v4)
@@ -269,7 +285,107 @@ import FadeIn from "@/components/atoms/FadeIn";
 
 ---
 
-## 13. Deployment
+## 13. Colour Studio — SVG Pattern System
+
+The `/visualizer` page (`app/visualizer/page.tsx`) wraps `PatternVisualizer` (organism), which renders interactive SVG pattern previews.
+
+### File layout
+
+```
+lib/patterns.ts                          — PATTERNS array, YARN_COLORS, types, helpers
+components/atoms/patterns/               — one SVG component per pattern
+  GrannySquareSVG.tsx
+  BucketHatSVG.tsx
+  MarketToteSVG.tsx
+  TurtleSVG.tsx
+  SolidSquareSVG.tsx
+  SunflowerSVG.tsx
+  StripedSquareSVG.tsx
+  MiteredSquareSVG.tsx
+  WindmillSVG.tsx
+components/organisms/PatternVisualizer.tsx  — orchestrator; SVG_MAP ties ids to components
+```
+
+### Adding a new pattern — checklist
+
+1. Add a `PatternDef` entry to `PATTERNS` in `lib/patterns.ts` — define `id`, `label`, `description`, and `regions[]` with `defaultColor`
+2. Create `components/atoms/patterns/<Name>SVG.tsx` — see conventions below
+3. Add `{ id: Component }` to `SVG_MAP` in `PatternVisualizer.tsx`
+4. No changes needed anywhere else — the visualizer renders regions dynamically
+
+### SVG component conventions
+
+Every pattern SVG must follow these rules:
+
+```tsx
+interface Props {
+  colors: Record<string, string>;
+  svgId?: string;
+}
+
+export default function MySVG({ colors, svgId }: Props) {
+  const { regionA = "#fallback", regionB = "#fallback" } = colors;
+  const pid = svgId ?? "mypattern-default";   // namespace all IDs with pid
+
+  return (
+    <svg
+      id={svgId}           // NOT pid — svgId is used by downloadSVG()
+      viewBox="0 0 400 400"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-full"
+      aria-label="Descriptive label for screen readers"
+      role="img"
+    >
+      <defs>
+        {/* Dot texture — use in every pattern */}
+        <pattern id={`${pid}-dots`} x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
+          <circle cx="6" cy="6" r="1.5" fill="black" fillOpacity="0.05" />
+        </pattern>
+        {/* ClipPaths, masks, etc. — always prefix id with pid */}
+        <clipPath id={`${pid}-body-clip"}>...</clipPath>
+      </defs>
+
+      {/* Drop shadow ellipse or rect */}
+      {/* Main shapes */}
+      {/* Stitch lines (dashed, strokeOpacity 0.05–0.08) */}
+      {/* Dot texture overlay last */}
+    </svg>
+  );
+}
+```
+
+**Rules:**
+- Always destructure `colors` with a fallback default for every region — ensures the SVG renders even if a color is missing
+- All `<defs>` IDs must be prefixed with `pid` — prevents collisions when multiple SVGs are on the same page
+- `id={svgId}` on the `<svg>` element (not `pid`) — `downloadSVG()` in PatternVisualizer uses `document.getElementById("pattern-preview-svg")` to find it
+- Drop shadow: an ellipse or rect with `fill="black" fillOpacity="0.07"` offset slightly down
+- Stitch lines: dashed strokes `strokeOpacity="0.05–0.08"`, `strokeWidth="1–2"`, `strokeDasharray="10,7"` or `"8,5"`
+- Texture: apply `fill={url(#${pid}-dots)}` overlay at the end so it sits on top of fill colors
+
+### Helpers
+
+```ts
+// Hexagonal polygon points (used in TurtleSVG)
+function hexPts(cx: number, cy: number, r: number): string {
+  return Array.from({ length: 6 }, (_, i) => {
+    const a = ((i * 60 - 30) * Math.PI) / 180;
+    return `${+(cx + r * Math.cos(a)).toFixed(1)},${+(cy + r * Math.sin(a)).toFixed(1)}`;
+  }).join(" ");
+}
+```
+
+### lib/patterns.ts types
+
+```ts
+YARN_COLORS     — 16 named yarn hex values, used by the palette grid
+PATTERNS        — PatternDef[]; drives tabs, region selectors, and default colors
+buildDefaultColors() — returns PatternColors (Record<patternId, Record<regionId, hex>>)
+getContrastColor(hex) — returns "#1c1917" or "#fafaf9" based on luminance; used for checkmark ink on yarn swatches
+```
+
+---
+
+## 14. Deployment
 
 - **Auto-deploy** triggers on push to `main` or `repository_dispatch` (Sanity webhook)
 - Secrets required in GitHub: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`

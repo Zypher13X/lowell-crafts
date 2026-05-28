@@ -6,7 +6,7 @@ export default function Marquee() {
     <div className="overflow-hidden border-y border-default py-3 my-10 bg-page">
       <div
         className="flex whitespace-nowrap text-sm tracking-widest uppercase text-subtle"
-        style={{ animation: "marquee 28s linear infinite", width: "max-content" }}
+        style={{ animation: "marquee 55s linear infinite", width: "max-content" }}
       >
         <span>{REPEATED}</span>
         <span aria-hidden>{REPEATED}</span>
