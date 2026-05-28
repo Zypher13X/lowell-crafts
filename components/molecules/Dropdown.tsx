@@ -38,16 +38,16 @@ export default function Dropdown<T extends string>({
   }
 
   useEffect(() => {
-    function onOutsideClick(e: MouseEvent) {
+    function onOutsideClick(e: PointerEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     }
     function onKeyDown(e: KeyboardEvent) {
       if (open && e.key === "Escape") close();
     }
-    document.addEventListener("mousedown", onOutsideClick);
+    document.addEventListener("pointerdown", onOutsideClick);
     document.addEventListener("keydown", onKeyDown);
     return () => {
-      document.removeEventListener("mousedown", onOutsideClick);
+      document.removeEventListener("pointerdown", onOutsideClick);
       document.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
@@ -91,7 +91,7 @@ export default function Dropdown<T extends string>({
           id={menuId}
           ref={menuRef}
           role="menu"
-          className={`absolute top-full z-10 mt-1.5 min-w-[9rem] overflow-hidden rounded-lg border border-default bg-surface shadow-lg ${
+          className={`absolute top-full z-50 mt-1.5 min-w-[9rem] overflow-hidden rounded-lg border border-default bg-surface shadow-lg ${
             align === "right" ? "right-0" : "left-0"
           }`}
         >
