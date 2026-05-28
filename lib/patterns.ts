@@ -161,9 +161,9 @@ export const PATTERNS: PatternDef[] = [
     description:
       "An amigurumi sea turtle with a rounded dome shell and big paddle flippers. Color the shell, flippers, and body separately.",
     regions: [
-      { id: "shell",    label: "Shell",        defaultColor: "#7A9E7E" },
-      { id: "flippers", label: "Flippers",     defaultColor: "#DDD0BC" },
-      { id: "body",     label: "Body & Head",  defaultColor: "#C8A878" },
+      { id: "shell",    label: "Shell",    defaultColor: "#7A9E7E" },
+      { id: "flippers", label: "Flippers", defaultColor: "#DDD0BC" },
+      { id: "head",     label: "Head",     defaultColor: "#C8A878" },
     ],
   },
 ];

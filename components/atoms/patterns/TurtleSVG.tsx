@@ -7,7 +7,7 @@ export default function TurtleSVG({ colors, svgId }: Props) {
   const {
     shell    = "#7A9E7E",
     flippers = "#DDD0BC",
-    body     = "#C8A878",
+    head     = "#C8A878",
   } = colors;
 
   const pid = svgId ?? "turtle-default";
@@ -40,7 +40,7 @@ export default function TurtleSVG({ colors, svgId }: Props) {
       <ellipse cx="200" cy="408" rx="158" ry="10" fill="black" fillOpacity="0.07" />
 
       {/* ── Body base (shows around shell edges) ────────── */}
-      <ellipse cx="200" cy="218" rx="148" ry="130" fill={body} />
+      <ellipse cx="200" cy="218" rx="148" ry="130" fill={flippers} />
       <ellipse cx="200" cy="218" rx="148" ry="130" fill={`url(#${pid}-dots)`} />
 
       {/* ── Front flippers ──────────────────────────────── */}
@@ -112,13 +112,13 @@ export default function TurtleSVG({ colors, svgId }: Props) {
 
       {/* ── Head ────────────────────────────────────────── */}
       {/* Neck connecting head to shell front */}
-      <ellipse cx="200" cy="90" rx="22" ry="16" fill={body} />
+      <ellipse cx="200" cy="90" rx="22" ry="16" fill={head} />
       {/* Round prominent head */}
-      <ellipse cx="200" cy="60" rx="34" ry="31" fill={body} />
+      <ellipse cx="200" cy="60" rx="34" ry="31" fill={head} />
       <ellipse cx="200" cy="60" rx="34" ry="31" fill={`url(#${pid}-dots)`} />
 
       {/* ── Tail ────────────────────────────────────────── */}
-      <ellipse cx="200" cy="362" rx="13" ry="20" fill={body} />
+      <ellipse cx="200" cy="362" rx="13" ry="20" fill={flippers} />
       <ellipse cx="200" cy="362" rx="13" ry="20" fill={`url(#${pid}-dots)`} />
 
       {/* ── Eyes ────────────────────────────────────────── */}
