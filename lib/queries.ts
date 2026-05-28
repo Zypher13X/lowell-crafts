@@ -11,8 +11,10 @@ export interface SanityCraft {
   category: Category;
   price: number;
   inStock: boolean;
+  quantity?: number | null;
   image?: SanityImageRef;
   imageAlt?: string;
+  images?: Array<SanityImageRef & { alt?: string }>;
 }
 
 const CRAFT_FIELDS = `
@@ -23,8 +25,10 @@ const CRAFT_FIELDS = `
   category,
   price,
   inStock,
+  quantity,
   image,
-  imageAlt
+  imageAlt,
+  images[] { ..., alt }
 `;
 
 export async function getCrafts(): Promise<SanityCraft[]> {
@@ -48,6 +52,20 @@ export async function getCraftBySlug(slug: string): Promise<SanityCraft | null> 
   } catch (err) {
     console.error("Failed to fetch craft by slug:", err);
     return null;
+  }
+}
+
+export async function getRelatedCrafts(
+  category: Category,
+  excludeId: string
+): Promise<SanityCraft[]> {
+  try {
+    return await client.fetch(
+      `*[_type == "craft" && category == $category && _id != $excludeId] | order(_createdAt desc)[0...4] { ${CRAFT_FIELDS} }`,
+      { category, excludeId }
+    );
+  } catch {
+    return [];
   }
 }
 

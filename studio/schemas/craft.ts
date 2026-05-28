@@ -53,15 +53,36 @@ export default defineType({
       initialValue: true,
     }),
     defineField({
+      name: "quantity",
+      title: "Quantity Available",
+      type: "number",
+      description: "Leave blank if unlimited / not tracked",
+      validation: (Rule) => Rule.min(0).integer(),
+    }),
+    defineField({
       name: "image",
-      title: "Image",
+      title: "Primary Image",
       type: "image",
       options: { hotspot: true },
     }),
     defineField({
       name: "imageAlt",
-      title: "Image Alt Text",
+      title: "Primary Image Alt Text",
       type: "string",
+    }),
+    defineField({
+      name: "images",
+      title: "Additional Images",
+      type: "array",
+      of: [
+        {
+          type: "image",
+          options: { hotspot: true },
+          fields: [
+            defineField({ name: "alt", title: "Alt Text", type: "string" }),
+          ],
+        },
+      ],
     }),
   ],
   preview: {

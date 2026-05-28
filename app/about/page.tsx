@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import FadeIn from "@/components/atoms/FadeIn";
 
 export const metadata: Metadata = {
   title: "About",
@@ -56,19 +57,18 @@ export default function AboutPage() {
           Small batches. No shortcuts. Here&apos;s what goes into every piece.
         </p>
         <ol className="mt-8 space-y-8" aria-label="Making process">
-          {PROCESS_STEPS.map((s) => (
-            <li key={s.step} className="flex gap-6">
-              <span
-                className="font-serif text-4xl leading-none text-subtle"
-                aria-hidden="true"
-              >
-                {s.step}
-              </span>
-              <div>
-                <h3 className="font-serif text-lg text-body">{s.title}</h3>
-                <p className="mt-1 leading-relaxed text-muted">{s.body}</p>
-              </div>
-            </li>
+          {PROCESS_STEPS.map((s, i) => (
+            <FadeIn key={s.step} delay={i * 100}>
+              <li className="flex gap-6">
+                <span className="font-serif text-4xl leading-none text-subtle" aria-hidden="true">
+                  {s.step}
+                </span>
+                <div>
+                  <h3 className="font-serif text-lg text-body">{s.title}</h3>
+                  <p className="mt-1 leading-relaxed text-muted">{s.body}</p>
+                </div>
+              </li>
+            </FadeIn>
           ))}
         </ol>
       </section>

@@ -18,6 +18,11 @@ export default function CraftCard({ craft, index, isFavorited = false, onFavorit
   const aspectRatio = ASPECT_RATIOS[index % ASPECT_RATIOS.length];
   const imageSrc = craft.image ? urlFor(craft.image).width(800).auto("format").url() : null;
   const href = craft.slug ? `/shop/${craft.slug}` : "#";
+  const lowStock =
+    craft.inStock &&
+    craft.quantity != null &&
+    craft.quantity > 0 &&
+    craft.quantity <= 3;
 
   return (
     <article
@@ -43,6 +48,13 @@ export default function CraftCard({ craft, index, isFavorited = false, onFavorit
           <div className="absolute inset-0 flex items-center justify-center bg-black/40">
             <span className="rounded bg-black/70 px-3 py-1 text-xs font-medium uppercase tracking-widest text-white">
               Sold Out
+            </span>
+          </div>
+        )}
+        {lowStock && (
+          <div className="absolute left-2 top-2">
+            <span className="rounded bg-[var(--color-accent)] px-2 py-0.5 text-xs font-medium text-on-accent">
+              Only {craft.quantity} left
             </span>
           </div>
         )}
