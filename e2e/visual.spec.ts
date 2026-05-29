@@ -70,6 +70,8 @@ test.describe("Theme visual snapshots", () => {
       await expect(page).toHaveScreenshot(`home-${theme}.png`, {
         fullPage: false,
         clip: { x: 0, y: 0, width: 1280, height: 800 },
+        // Font rendering differs between macOS and Linux Chromium
+        maxDiffPixelRatio: 0.10,
       });
     });
 
@@ -82,6 +84,8 @@ test.describe("Theme visual snapshots", () => {
       await expect(page).toHaveScreenshot(`studio-${theme}.png`, {
         fullPage: false,
         clip: { x: 0, y: 0, width: 1280, height: 800 },
+        // Font rendering differs between macOS and Linux Chromium
+        maxDiffPixelRatio: 0.10,
       });
     });
   }
