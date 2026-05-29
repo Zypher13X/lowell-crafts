@@ -122,8 +122,7 @@ describe("Gallery — sort", () => {
     await user.click(screen.getByRole("menuitem", { name: /price: low to high/i }));
 
     const titles = screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent);
-    const prices = [20, 25, 25, 25, 30, 35, 45, 80]; // not testing exact order, just cheapest first
-    // Turtle (20) should appear before Market Tote (45)
+    // not testing exact order, just that cheapest appears first
     const turtleIdx = titles.findIndex((t) => t === "Turtle Plush");
     const toteIdx   = titles.findIndex((t) => t === "Market Tote");
     expect(turtleIdx).toBeLessThan(toteIdx);

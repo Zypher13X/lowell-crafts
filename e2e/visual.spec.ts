@@ -1,9 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 
 const BASE = "/lowell-crafts";
 
 // Wait for PatternVisualizer's dynamic import to finish loading
-async function waitForStudio(page: ReturnType<typeof test["info"]> extends never ? never : Parameters<Parameters<typeof test>[1]>[0]["page"]) {
+async function waitForStudio(page: Page) {
   await page.waitForSelector('[aria-label$="color preview"]', { timeout: 10_000 });
 }
 

@@ -386,7 +386,68 @@ getContrastColor(hex) — returns "#1c1917" or "#fafaf9" based on luminance; use
 
 ---
 
-## 14. Deployment
+## 14. Blanket Builder
+
+The `/blanket` page (`app/blanket/page.tsx`) wraps `BlanketBuilder` (organism), which renders an interactive blanket designer built on the granny SVG pattern system.
+
+### File layout
+
+```
+lib/blanket.ts                          — BlanketVariant, BlanketConfig types, ARRANGEMENTS, BLANKET_PRESETS, helpers
+components/atoms/patterns/*Inner.tsx    — inner SVG content for each of the 6 granny patterns (no <svg> wrapper)
+components/atoms/BlanketPreviewSVG.tsx  — live blanket SVG using <symbol>/<use> for efficiency
+components/atoms/ArrangementThumbnail.tsx — mini colored-grid SVGs for arrangement picker
+components/organisms/BlanketBuilder.tsx — full builder UI (client component)
+app/blanket/page.tsx                    — server component page
+```
+
+### Inner component pattern
+
+The 6 granny SVG components (`GrannySquareSVG`, `SolidSquareSVG`, etc.) each delegate their content to a `*Inner.tsx` sibling. Inner components:
+
+- Accept `{ colors, pid }` — no `svgId`, no SVG wrapper
+- Return a React Fragment with `<defs>` and SVG shape elements
+- Are used by both the outer SVG wrappers (for Color Studio) and the blanket builder's `<symbol>` elements
+
+```tsx
+// outer wrapper stays thin:
+export default function GrannySquareSVG({ colors, svgId }: Props) {
+  const pid = svgId ?? "gs-default";
+  return <svg id={svgId} viewBox="0 0 400 400" ...><GrannySquareInner colors={colors} pid={pid} /></svg>;
+}
+
+// inside BlanketPreviewSVG:
+<symbol id="bsq-0" viewBox="0 0 400 400">
+  <GrannySquareInner colors={variant.colors} pid="bsq-0" />
+</symbol>
+```
+
+### BlanketPreviewSVG — symbol/use approach
+
+- Defines one `<symbol id="bsq-{i}">` per variant in `<defs>`
+- Uses `<use href="#bsq-{i}" x={col*TILE} y={row*TILE} width={TILE} height={TILE}>` for each grid cell
+- TILE = 100 in SVG coordinate space; outer SVG viewBox = `cols*100 × rows*100`
+- `INNER_MAP` maps pattern IDs to Inner components — add new granny patterns there
+
+### lib/blanket.ts exports
+
+```ts
+autoColsForRows(rows)   — cols = Math.max(2, Math.round(rows * 3 / 8) * 2)  [3:4 width:height ratio, always even]
+getGrannyPatterns()     — PATTERNS.filter(p => p.groupId === 'granny'); auto-picks up new patterns
+buildDefaultVariant(id) — BlanketVariant with default colors for a given pattern ID
+BLANKET_PRESETS         — Baby(6), Lapghan(10), Throw(12), Full(16), King(20), Custom
+ARRANGEMENTS            — 7 ArrangementDef objects, each with id, label, fn(row, col, rows, cols, count) → index
+```
+
+### Adding a new granny pattern to the blanket builder
+
+1. Create `components/atoms/patterns/<Name>Inner.tsx` (inner content only — see Inner component pattern above)
+2. Add `{ id: Component }` to `INNER_MAP` in `BlanketPreviewSVG.tsx`
+3. That's it — `getGrannyPatterns()` auto-includes it; the builder picks it up with no other changes needed
+
+---
+
+## 15. Deployment
 
 - **Auto-deploy** triggers on push to `main` or `repository_dispatch` (Sanity webhook)
 - Secrets required in GitHub: `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`
