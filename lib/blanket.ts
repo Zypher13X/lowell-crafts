@@ -91,6 +91,7 @@ export const ARRANGEMENTS: ArrangementDef[] = [
     id: "pinwheel",
     label: "Pinwheel",
     minVariants: 2,
+    maxVariants: 4,
     fn: (row, col, rows, cols, count) => {
       const q = (row < rows / 2 ? 0 : 2) + (col < cols / 2 ? 0 : 1);
       return q % count;

@@ -145,9 +145,15 @@ describe("ARRANGEMENTS", () => {
     expect(cb.maxVariants).toBe(2);
   });
 
-  it("all arrangements other than solid and checkerboard have no maxVariants", () => {
+  it("pinwheel has maxVariants === 4", () => {
+    const pinwheel = ARRANGEMENTS.find((a) => a.id === "pinwheel")!;
+    expect(pinwheel.maxVariants).toBe(4);
+  });
+
+  it("row-stripes, col-stripes, diagonal, and brick have no maxVariants", () => {
+    const uncapped = ["row-stripes", "col-stripes", "diagonal", "brick"];
     ARRANGEMENTS
-      .filter((a) => a.id !== "solid" && a.id !== "checkerboard")
+      .filter((a) => uncapped.includes(a.id))
       .forEach((arr) => {
         expect(arr.maxVariants).toBeUndefined();
       });

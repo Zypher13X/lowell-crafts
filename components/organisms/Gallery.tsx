@@ -90,7 +90,7 @@ export default function Gallery({ crafts }: { crafts: SanityCraft[] }) {
           value={sort}
           onChange={setSort}
           triggerLabel="Sort by"
-          align="left"
+          align="right"
         />
       </div>
 
