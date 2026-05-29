@@ -7,6 +7,8 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: 1,
   reporter: process.env.CI ? "github" : "html",
+  // Omit {platform} so the same snapshots work on macOS and Linux CI
+  snapshotPathTemplate: "{testDir}/{testFileDir}/{testFileName}-snapshots/{arg}-{projectName}{ext}",
   use: {
     baseURL: "http://localhost:3333",
     trace: "on-first-retry",
