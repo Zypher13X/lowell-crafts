@@ -86,10 +86,12 @@ describe("ARRANGEMENTS", () => {
     expect(ARRANGEMENTS).toHaveLength(7);
   });
 
-  it("all arrangements return values in [0, count-1]", () => {
+  it("all arrangements return values in [0, count-1] for valid counts", () => {
     const ROWS = 8, COLS = 6;
     [1, 2, 4, 6].forEach((count) => {
       ARRANGEMENTS.forEach((arr) => {
+        if (count < arr.minVariants) return;
+        if (arr.maxVariants !== undefined && count > arr.maxVariants) return;
         for (let r = 0; r < ROWS; r++) {
           for (let c = 0; c < COLS; c++) {
             const idx = arr.fn(r, c, ROWS, COLS, count);
@@ -131,5 +133,33 @@ describe("ARRANGEMENTS", () => {
     ARRANGEMENTS.filter((a) => a.id !== "solid").forEach((arr) => {
       expect(arr.minVariants).toBeGreaterThanOrEqual(2);
     });
+  });
+
+  it("solid has maxVariants === 1", () => {
+    const solid = ARRANGEMENTS.find((a) => a.id === "solid")!;
+    expect(solid.maxVariants).toBe(1);
+  });
+
+  it("checkerboard has maxVariants === 2", () => {
+    const cb = ARRANGEMENTS.find((a) => a.id === "checkerboard")!;
+    expect(cb.maxVariants).toBe(2);
+  });
+
+  it("all arrangements other than solid and checkerboard have no maxVariants", () => {
+    ARRANGEMENTS
+      .filter((a) => a.id !== "solid" && a.id !== "checkerboard")
+      .forEach((arr) => {
+        expect(arr.maxVariants).toBeUndefined();
+      });
+  });
+
+  it("checkerboard always returns 0 or 1 regardless of count", () => {
+    const cb = ARRANGEMENTS.find((a) => a.id === "checkerboard")!;
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        const idx = cb.fn(r, c, 6, 6, 2);
+        expect(idx === 0 || idx === 1).toBe(true);
+      }
+    }
   });
 });

@@ -131,10 +131,23 @@ test.describe("Blanket Builder — functional", () => {
     await expect(page.getByLabel(/height/i)).toBeVisible();
   });
 
-  test("arrangement buttons are present with at least solid enabled", async ({ page }) => {
-    const solidBtn = page.getByRole("button", { name: /solid/i }).first();
-    await expect(solidBtn).toBeVisible();
-    await expect(solidBtn).not.toBeDisabled();
+  test("arrangement buttons respect variant count constraints", async ({ page }) => {
+    // Default is 2 variants
+    // Row Stripes has no max — should be enabled
+    const rowStripes = page.getByRole("button", { name: "Row Stripes" });
+    await expect(rowStripes).toBeVisible();
+    await expect(rowStripes).not.toBeDisabled();
+
+    // Checkerboard works with exactly 2 — enabled at default count of 2
+    const checkerboard = page.getByRole("button", { name: "Checkerboard" });
+    await expect(checkerboard).not.toBeDisabled();
+
+    // Add a 3rd type — checkerboard (max 2) should become disabled
+    await page.getByRole("button", { name: "3", exact: true }).click();
+    await expect(checkerboard).toBeDisabled();
+
+    // Row Stripes should remain enabled with 3 variants
+    await expect(rowStripes).not.toBeDisabled();
   });
 
   test("Save as SVG button is present", async ({ page }) => {

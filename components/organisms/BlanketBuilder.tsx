@@ -68,10 +68,16 @@ export default function BlanketBuilder() {
       const nextPattern = PATTERNS.find((p) => p.id === variants[nextIdx]?.patternId);
       if (nextPattern) setActiveRegion(nextPattern.regions[0].id);
     }
-    // If the active arrangement requires more variants than newCount, fall back to solid
     const currentArr = ARRANGEMENTS.find((a) => a.id === arrangementId);
-    if (currentArr && currentArr.minVariants > newCount) {
-      setArrangementId("solid");
+    if (currentArr) {
+      const tooFew = currentArr.minVariants > newCount;
+      const tooMany = currentArr.maxVariants !== undefined && newCount > currentArr.maxVariants;
+      if (tooFew || tooMany) {
+        const fallback = ARRANGEMENTS.find(
+          (a) => a.minVariants <= newCount && (a.maxVariants === undefined || a.maxVariants >= newCount)
+        );
+        setArrangementId(fallback?.id ?? "solid");
+      }
     }
   }
 
@@ -114,6 +120,19 @@ export default function BlanketBuilder() {
 
   const thumbnailColors = variants.map((v) => Object.values(v.colors)[0] ?? "#ccc");
 
+  // Which variant indices are actually rendered by the current arrangement + grid size
+  const activeArrangement = ARRANGEMENTS.find((a) => a.id === arrangementId)!;
+  const usedVariantIndices = (() => {
+    const used = new Set<number>();
+    outer: for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        used.add(activeArrangement.fn(r, c, rows, cols, variantCount));
+        if (used.size === variantCount) break outer;
+      }
+    }
+    return used;
+  })();
+
   return (
     <div className="flex flex-col gap-10 lg:flex-row lg:items-start">
       {/* ── Left: Controls ──────────────────────────────── */}
@@ -148,16 +167,19 @@ export default function BlanketBuilder() {
           <div className="mb-4 flex flex-wrap gap-1.5">
             {variants.map((v, i) => {
               const swatch = Object.values(v.colors)[0] ?? "#ccc";
+              const isSelected = activeVariantIdx === i;
+              const isUsed = usedVariantIndices.has(i);
               return (
                 <button
                   key={i}
                   onClick={() => handleActiveVariantChange(i)}
-                  aria-pressed={activeVariantIdx === i}
+                  aria-pressed={isSelected}
+                  title={!isUsed ? "Not shown in current arrangement" : undefined}
                   className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition-colors ${
-                    activeVariantIdx === i
+                    isSelected
                       ? "border-[var(--color-accent)] bg-accent text-on-accent"
                       : "border-default bg-surface text-muted hover:text-body"
-                  }`}
+                  } ${!isUsed ? "opacity-40" : ""}`}
                 >
                   <span
                     className="h-3 w-3 rounded-full border border-black/10"
@@ -315,8 +337,13 @@ export default function BlanketBuilder() {
           </p>
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-3">
             {ARRANGEMENTS.map((arr) => {
-              const isDisabled = arr.minVariants > variantCount;
+              const tooFew = arr.minVariants > variantCount;
+              const tooMany = arr.maxVariants !== undefined && variantCount > arr.maxVariants;
+              const isDisabled = tooFew || tooMany;
               const isActive = arrangementId === arr.id;
+              const disabledTitle = tooMany
+                ? `Works with exactly ${arr.maxVariants} square type${arr.maxVariants === 1 ? "" : "s"}`
+                : `Requires ${arr.minVariants}+ square types`;
               return (
               <button
                 key={arr.id}
@@ -324,7 +351,7 @@ export default function BlanketBuilder() {
                 aria-pressed={isActive}
                 aria-disabled={isDisabled}
                 disabled={isDisabled}
-                title={isDisabled ? `Requires ${arr.minVariants}+ square types` : undefined}
+                title={isDisabled ? disabledTitle : undefined}
                 className={`flex flex-col items-center gap-1.5 rounded-lg border p-2 transition-all ${
                   isDisabled
                     ? "cursor-not-allowed border-default opacity-35"

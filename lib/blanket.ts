@@ -49,6 +49,8 @@ export interface ArrangementDef {
   id: string;
   label: string;
   minVariants: number;
+  // When set, the arrangement uses exactly this many variants; more are ignored
+  maxVariants?: number;
   fn: (row: number, col: number, rows: number, cols: number, count: number) => number;
 }
 
@@ -57,13 +59,15 @@ export const ARRANGEMENTS: ArrangementDef[] = [
     id: "solid",
     label: "Solid",
     minVariants: 1,
+    maxVariants: 1,
     fn: () => 0,
   },
   {
     id: "checkerboard",
     label: "Checkerboard",
     minVariants: 2,
-    fn: (row, col, _r, _c, count) => (row + col) % Math.min(count, 2),
+    maxVariants: 2,
+    fn: (row, col) => (row + col) % 2,
   },
   {
     id: "row-stripes",
