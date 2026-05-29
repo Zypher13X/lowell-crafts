@@ -14,7 +14,6 @@ interface Props<T extends string> {
   onChange: (value: T) => void;
   /** Overrides the trigger aria-label (e.g. "Theme: Light") */
   triggerLabel?: string;
-  align?: "left" | "right";
 }
 
 export default function Dropdown<T extends string>({
@@ -22,9 +21,9 @@ export default function Dropdown<T extends string>({
   value,
   onChange,
   triggerLabel,
-  align = "right",
 }: Props<T>) {
   const [open, setOpen] = useState(false);
+  const [menuAlign, setMenuAlign] = useState<"left" | "right">("right");
   const ref = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -65,7 +64,13 @@ export default function Dropdown<T extends string>({
     <div ref={ref} className="relative w-fit">
       <button
         ref={buttonRef}
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          if (!open && buttonRef.current) {
+            const { right } = buttonRef.current.getBoundingClientRect();
+            setMenuAlign(right > window.innerWidth / 2 ? "right" : "left");
+          }
+          setOpen((v) => !v);
+        }}
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls={menuId}
@@ -95,7 +100,7 @@ export default function Dropdown<T extends string>({
           ref={menuRef}
           role="menu"
           className={`absolute top-full z-50 mt-1.5 min-w-[9rem] overflow-hidden rounded-lg border border-default bg-surface shadow-lg ${
-            align === "right" ? "right-0" : "left-0"
+            menuAlign === "right" ? "right-0" : "left-0"
           }`}
         >
           {options.map((opt) => (
